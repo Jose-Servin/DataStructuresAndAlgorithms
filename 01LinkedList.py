@@ -81,6 +81,7 @@ class LinkedList:
         if index < 0 or index >= self.length:
             return None
         temp = self.head
+        #  O(n) way to get Node
         for _ in range(index):
             temp = temp.next
         return temp
@@ -93,11 +94,59 @@ class LinkedList:
             return True
         return False
 
+    def insert(self, index, value):
+        if index < 0 or index > self.length:
+            return False
+        if index == 0:
+            return self.prepend(value)
+        if index == self.length:
+            return self.append(value)
+        new_node = Node(value=value)
+        temp = self.get(index=index - 1)
+        new_node.next = temp.next
+        temp.next = new_node
+        self.length += 1
+        return True
 
-ll = LinkedList(0)
-ll.append(1)
+    def remove(self, index):
+        if index < 0 or index >= self.length:
+            # None not False because we expect a Node in return
+            return None
+        if index == 0:
+            return self.pop_first()
+        if index == self.length - 1:
+            return self.pop()
+
+        prev = self.get(index=index-1)
+        # O(1) way to get Node
+        temp = prev.next
+
+        prev.next = temp.next
+        temp.next = None
+        self.length -= 1
+        return temp
+
+    def reverse(self):
+        # Reverse head and tail
+        temp = self.head
+        self.head = self.tail
+        self.tail = temp
+
+        after = temp.next
+        before = None
+
+        for _ in range(self.length):
+            after = temp.next
+            temp.next = before
+            before = temp
+            temp = after
+
+
+ll = LinkedList(1)
 ll.append(2)
+ll.append(3)
+ll.append(4)
 ll.print_list()
 print("\n")
-ll.set_value(2, 100)
+ll.reverse()
 ll.print_list()
