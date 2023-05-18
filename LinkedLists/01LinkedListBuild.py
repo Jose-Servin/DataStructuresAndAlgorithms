@@ -6,11 +6,11 @@ class Node:
 
 class LinkedList:
     """
-    .append(self)
+    .append(self, value)
 
     .pop(self)
 
-    .prepend(self)
+    .prepend(self, value)
 
     .pop_first(self)
 
